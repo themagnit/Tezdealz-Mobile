@@ -23,6 +23,9 @@ export default function useCachedResources() {
           "IBMPlexSans-SemiBold": require("../assets/fonts/IBMPlexSans-SemiBold.ttf"), //600
           "IBMPlexSans-Bold": require("../assets/fonts/IBMPlexSans-Bold.ttf"), //700
           "IBMPlexSans-Italic": require("../assets/fonts/IBMPlexSans-Italic.ttf"),
+          "RRoboto-Thin-Italic": require('../assets/fonts/Roboto/Roboto-ThinItalic.ttf'),
+          "Roboto-Thin": require('../assets/fonts/Roboto/Roboto-Thin.ttf'),
+          "Roboto-Medium":require('../assets/fonts/Roboto/Roboto-Medium.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service

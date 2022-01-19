@@ -1,5 +1,6 @@
 {
   "expo": {
+    
     "name": "tezDealz-MobileApp",
     "slug": "tezDealz-MobileApp",
     "version": "1.0.0",
@@ -8,7 +9,7 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/tezDealz.png",
+      "image": "./assets/images/Carokta_Logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

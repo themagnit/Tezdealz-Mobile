@@ -5,7 +5,7 @@ export const COLOR = {
   primary: "#C20000",
   secondary: "#979797",
   Black: "#000",
-  background: "#E5E5E5",
+  background:  "#F0F1F2", // "#E5E5E5", //'#F9F9FF',
   GraniteGray: "#666666",
   RaisinBlack: "#212121",
   DarkCharcoal: "#313131",
@@ -43,4 +43,15 @@ export const COLOR = {
   GoogleRed: "#DB4437",
   RedOlive: "#EE4B4B",
   CarminePink: "#F04148",
+  vivBlue:'#05409D',
+  vividBlue :'#055FFF',
+  lightGray:'#F0F1F2',
+  veryDarkBlue:'#092C4C',
+  darkBlue:'#484848',
+  grayishBlue:'#f9f9fe',
+  pureBlue:'#0000FF',
+  tabActive:'#05409D',
+  tabInctive:'#979797',
+  headerColor:'#484848'
+  
 };

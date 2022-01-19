@@ -9,14 +9,14 @@ const initialState = {
 //sampleUse: showLoader()
 export default function authenticationReducer(
   state = initialState,
-  action: { type: any; token: any; data: { user: any } }
+  action: { type: any; data: { user: any,token: any;  } }
 ) {
   switch (action.type) {
     case ReducerConstants.LOGIN:
       return {
         ...state,
         isAuthenticated: true,
-        token: action.token,
+        token: action.data.token,
         user: action.data.user,
       };
     case ReducerConstants.LOGOUT:

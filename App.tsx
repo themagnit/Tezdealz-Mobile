@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import Routes from "./navigation/Routes";
 import store from "./redux/store/store";
 import useCachedResources from "./resources/useCachedResources";
+import { MenuProvider } from 'react-native-popup-menu';
 export default function App() {
   const isLoadingComplete = useCachedResources();
 
@@ -14,8 +15,9 @@ export default function App() {
     return (
       <NativeBaseProvider>
         <Provider store={store}>
+          <MenuProvider>
           <Routes />
-          <StatusBar />
+          </MenuProvider>
         </Provider>
       </NativeBaseProvider>
     );
