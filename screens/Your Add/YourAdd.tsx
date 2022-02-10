@@ -341,17 +341,21 @@ const YourAdd = ({ navigation }: any) => {
                               text="Publish"
                             />
                           ) : null}
-
-                          <MenuOption
-                            onSelect={() => toggleSold(item)}
-                            text={
-                              item.isSold ? "Mark as Unsold" : "Mark as Sold"
-                            }
-                          />
-                          <MenuOption
-                            onSelect={() => toggleActive(item)}
-                            text={item.active ? "Deactivate" : "Activate"}
-                          />
+                          {item.isPublished && item.active && (
+                            <MenuOption
+                              onSelect={() => toggleSold(item)}
+                              text={
+                                item.isSold ? "Mark as Unsold" : "Mark as Sold"
+                              }
+                            />
+                          )}
+                          
+                          {item.isPublished && !item.isSold && (
+                            <MenuOption
+                              onSelect={() => toggleActive(item)}
+                              text={item.active ? "Deactivate" : "Activate"}
+                            />
+                          )}
                         </MenuOptions>
                       </Menu>
                     </View>

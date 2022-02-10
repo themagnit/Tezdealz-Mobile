@@ -1,6 +1,6 @@
 export const endPoints = {
   apiBaseUrl: "http://api.tezdealz.com/",
-  // apiBaseUrl:"https://beta-api.carokta.com/",
+  //  apiBaseUrl:"https://beta-api.carokta.com/",
 
   api: {
     LOGIN_ENDPOINT: "v1/Users/login",

@@ -48,6 +48,7 @@ import Description from "./Description/Description";
 import Specification from "./Specification/Specification";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useSelector } from "react-redux";
+import useShortListCars from "../../redux/hooks/useShortListCars";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -58,9 +59,36 @@ const CarDetails = ({ navigation, route }: any) => {
   const [obj, setObj] = useState<any>({});
   const [featuresArray, setFeaturesArray] = useState<Array<any>>([]);
   const [carFeatures, setCarFeatures] = useState<Array<any>>([]);
-
+  const { shortlistCars } = useSelector((state: any) => state.shortlistCars);
   const { Id } = route.params;
   const toast = useToast();
+  const { clearShortListedCars, removeShortListItem, shortListItem } =
+    useShortListCars();
+
+  const toggleShortListCar = (car: any) => {
+    if (shortlistCars.filter((item: any) => item._id === car._id).length > 0) {
+      removeShortListed && removeShortListed(car._id);
+    } else {
+      handleShortList && handleShortList(car);
+    }
+  };
+
+  const removeShortListed = (itemId: string) => {
+    let result = removeShortListItem(itemId);
+    toast.show({
+      title: result.message,
+      status: result.status,
+    });
+  };
+
+  const handleShortList = (car: any) => {
+    let result = shortListItem(car);
+    toast.show({
+      title: result.message,
+      status: result.status,
+    });
+  };
+
   useEffect(() => {
     if (Id) {
       getFeatures();
@@ -308,10 +336,17 @@ const CarDetails = ({ navigation, route }: any) => {
             </View>
             <View style={styles.mainView}>
               <MaterialIcons
+                onPress={() => {
+                  toggleShortListCar(obj);
+                }}
                 name="compare"
                 size={20}
-                color={COLOR.tabInctive}
-                style={styles.icon}
+                color={
+                  shortlistCars.filter((e: any) => e._id === obj._id).length > 0
+                    ? COLOR.primary
+                    : COLOR.secondary
+                }
+                //  style={styles.spaceMargin}
               />
               <Entypo
                 name="share"
@@ -357,15 +392,18 @@ const CarDetails = ({ navigation, route }: any) => {
                         text="Publish"
                       />
                     ) : null}
-
-                    <MenuOption
-                      onSelect={() => toggleSold(obj)}
-                      text={obj.isSold ? "Mark as Unsold" : "Mark as Sold"}
-                    />
-                    <MenuOption
-                      onSelect={() => toggleActive(obj)}
-                      text={obj.active ? "Deactivate" : "Activate"}
-                    />
+                    {obj.isPublished && obj.active && (
+                      <MenuOption
+                        onSelect={() => toggleSold(obj)}
+                        text={obj.isSold ? "Mark as Unsold" : "Mark as Sold"}
+                      />
+                    )}
+                    {obj.isPublished && !obj.isSold && (
+                      <MenuOption
+                        onSelect={() => toggleActive(obj)}
+                        text={obj.active ? "Deactivate" : "Activate"}
+                      />
+                    )}
                   </MenuOptions>
                 </Menu>
               )}
@@ -418,6 +456,11 @@ const CarDetails = ({ navigation, route }: any) => {
               tabStyle: {
                 borderTopWidth: 1,
                 borderTopColor: COLOR.tabInctive,
+              },
+              labelStyle: {
+                //fontSize: 14,
+                color: "black",
+                fontWeight: "500",
               },
             }}
           >

@@ -131,17 +131,22 @@ const CarCard = (props: any) => {
                           text="Publish"
                         />
                       ) : null}
-
-                      <MenuOption
-                        onSelect={() => props.toggleSold(props.item)}
-                        text={
-                          props.item.isSold ? "Mark as Unsold" : "Mark as Sold"
-                        }
-                      />
-                      <MenuOption
-                        onSelect={() => props.toggleActive(props.item)}
-                        text={props.item.active ? "Deactivate" : "Activate"}
-                      />
+                      {props.item.isPublished && props.item.active && (
+                        <MenuOption
+                          onSelect={() => props.toggleSold(props.item)}
+                          text={
+                            props.item.isSold
+                              ? "Mark as Unsold"
+                              : "Mark as Sold"
+                          }
+                        />
+                      )}
+                      {props.item.isPublished && !props.item.isSold && (
+                        <MenuOption
+                          onSelect={() => props.toggleActive(props.item)}
+                          text={props.item.active ? "Deactivate" : "Activate"}
+                        />
+                      )}
                     </MenuOptions>
                   </Menu>
                 )}

@@ -12,6 +12,7 @@ import {
 } from "@expo/vector-icons";
 import Home from "../screens/Home";
 import Compare from "../screens/Compare/Compare";
+import CompareNew from '../screens/CompareNew/CompareNew'
 import BrowseCar from "../screens/Browse Car/BrowseCar";
 import Help from "../screens/Help/Help";
 import AddPost from "../screens/AddPost/AddPost";
@@ -24,6 +25,7 @@ import CompletePost from "../screens/AddPost/CompletePost/CompletePost";
 import Search from "../screens/Search/Search";
 import { COLOR } from "../constants/Colors";
 import ChangePassword from "../screens/Settings/ChangePassword";
+import CompareCar from "../screens/CompareCar/CompareCar";
 
 const Stack = createStackNavigator();
 
@@ -161,7 +163,7 @@ const CompareStackNavigator = ({ navigation }: any) => {
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen
         name="Compare"
-        component={Compare}
+        component={CompareCar}
         options={{
           headerLeft: () => (
             <Icon

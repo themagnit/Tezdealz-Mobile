@@ -113,8 +113,6 @@ const CarListing = ({ navigation }: any) => {
   const [text, onChangeText] = React.useState("Useless Text");
   const [number, onChangeNumber] = React.useState(null);
 
-  const onChangeSearch = (query) => setSearchQuery(query);
-
   const [rangeValues, setRangeValues] = useState<any>({
     price: [0, 50000000],
     modelYear: [1971, 2021],
@@ -476,10 +474,20 @@ const CarListing = ({ navigation }: any) => {
       getCitiesWithCars();
     }
   };
-  const getAllCars = async () => {
-    let params = `?limit=20&page=${page.toString()}`;
+  const serachHandle = () => {
+    let queryParams = {
+      keyword: searchQuery,
+    };
+    // dispatch(setFilter(queryParams));
 
+    getAllCars(searchQuery);
+  };
+
+  const getAllCars = async (keyword: any = "") => {
+    let params = `?limit=20&page=${page.toString()}`;
+    debugger;
     Object.entries(carFilters).map(([keys, values]: any) => {
+      debugger;
       if (values !== initialValues[keys]) {
         if (typeof values === typeof [] && !(keys in initialRangeValues)) {
           // eslint-disable-next-line
@@ -501,8 +509,11 @@ const CarListing = ({ navigation }: any) => {
         }
       }
     });
+    if (keyword) {
+      params += `&${"keyword"}=${keyword}`;
+    }
 
-    console.log("params", params);
+    console.log("params------", params);
     await getAllData(endPoints.api.ADSCAR + params)
       .then((response) => {
         setIsLoading(false);
@@ -600,9 +611,6 @@ const CarListing = ({ navigation }: any) => {
   };
 
   const handleShortList = (car: any) => {
-    console.log("car", car);
-    // setAlertOpen(true);
-    // setResponseMessage(shortListItem(item));
     let result = shortListItem(car);
     toast.show({
       title: result.message,
@@ -615,8 +623,6 @@ const CarListing = ({ navigation }: any) => {
   };
 
   const removeShortListed = (itemId: string) => {
-    // setAlertOpen(true);
-    // setResponseMessage(removeShortListItem(itemId));
     let result = removeShortListItem(itemId);
     toast.show({
       title: result.message,
@@ -800,84 +806,89 @@ const CarListing = ({ navigation }: any) => {
     <View style={[styles.container]}>
       <View>
         <Appbar.Header style={{ backgroundColor: COLOR.White }}>
-          {/* <View style={styles.searchSection}>
-         
-            <TextInput
-              style={styles.input1}
-              placeholder="User Nickname"
-              //  onChangeText={(searchString) => {this.setState({searchString})}}
-              underlineColorAndroid="transparent"
-            />
-              <MaterialIcons name="ios-search" size={18} color={COLOR.headerColor} />
-          </View> */}
-          <Icon
-            name="menu"
-            style={{ margin: 10 }}
-            size={30}
-            color={COLOR.headerColor}
-            onPress={() => {
-              navigation.openDrawer({
-                side: "right",
-                animated: true,
-                to: "closed",
-              });
-            }}
-          />
-          <View
-            style={{
-              flexDirection: "row",
-              flex: 1,
-              justifyContent: "center",
-            }}
-          >
-            {searchIcon ? (
-              <Searchbar
-                placeholder="Search"
-                onChangeText={onChangeSearch}
-                value={searchQuery}
-                style={styles.input}
-                onBlur={() => {
-                  setSearchIcon(false);
-                  setSearchQuery("");
+          {searchIcon && (
+            <View style={styles.headerContainer}>
+              <View style={styles.input1}>
+                <Ionicons
+                  name="close"
+                  size={24}
+                  color="black"
+                  style={styles.spaceMargin}
+                  onPress={() => {
+                    setSearchQuery("");
+                    setSearchIcon(false);
+                    getAllCars()
+                  }}
+                />
+
+                <TextInput
+                  style={{ flex: 1 }}
+                  placeholder="Enter Your Name Here"
+                  underlineColorAndroid="transparent"
+                  value={searchQuery}
+                  onChangeText={(val) => {
+                    setSearchQuery(val);
+                  }}
+                />
+                <Ionicons
+                  name="search"
+                  size={24}
+                  color="black"
+                  style={styles.spaceMargin}
+                  onPress={() => {
+                    serachHandle();
+                  }}
+                />
+              </View>
+            </View>
+          )}
+          {!searchIcon && (
+            <>
+              <Icon
+                name="menu"
+                style={styles.modalRow}
+                size={30}
+                color={COLOR.headerColor}
+                onPress={() => {
+                  navigation.openDrawer({
+                    side: "right",
+                    animated: true,
+                    to: "closed",
+                  });
                 }}
               />
-            ) : (
-              <TouchableOpacity
-                style={{
-                  flexDirection: "row",
-                  flex: 1,
-                  justifyContent: "center",
-                }}
-              >
-                <EvilIcons
-                  name="location"
-                  size={20}
-                  color={COLOR.headerColor}
-                  style={{ marginTop: 2 }}
-                />
-                <View style={{ flexDirection: "column" }}>
-                  <Text style={{ color: COLOR.headerColor, fontSize: 14 }}>
-                    Islamabad
-                  </Text>
-                  <Text style={{ color: COLOR.tabActive, fontSize: 9 }}>
-                    Change location
-                  </Text>
-                </View>
+              <View style={styles.subHeader}>
+                <TouchableOpacity style={styles.subHeader}>
+                  <EvilIcons
+                    name="location"
+                    size={20}
+                    color={COLOR.headerColor}
+                    style={{ marginTop: 2 }}
+                  />
+                  <View style={{ flexDirection: "column" }}>
+                    <Text style={{ color: COLOR.headerColor, fontSize: 14 }}>
+                      Islamabad
+                    </Text>
+                    <Text style={{ color: COLOR.tabActive, fontSize: 9 }}>
+                      Change location
+                    </Text>
+                  </View>
 
-                <AntDesign name="down" size={18} color={COLOR.headerColor} />
-              </TouchableOpacity>
-            )}
-          </View>
-          {!searchIcon && (
-            <Feather
-              name="search"
-              size={24}
-              color={COLOR.headerColor}
-              style={{ marginHorizontal: 15 }}
-              onPress={() => {
-                setSearchIcon(true);
-              }}
-            />
+                  <AntDesign name="down" size={18} color={COLOR.headerColor} />
+                </TouchableOpacity>
+                {!searchIcon && (
+                  <Feather
+                    name="search"
+                    size={24}
+                    color={COLOR.headerColor}
+                    style={{ marginHorizontal: 15 }}
+                    onPress={() => {
+                      setSearchIcon(true);
+                    }}
+                  />
+                )}
+              </View>
+            </>
           )}
         </Appbar.Header>
       </View>
@@ -974,7 +985,7 @@ const CarListing = ({ navigation }: any) => {
               refreshing={refreshing}
             />
           )}
-          {shortlistCars.length >= 1 && (
+          {/* {shortlistCars.length >= 1 && (
             <>
               <TouchableOpacity
                 onPress={() => resetCampare()}
@@ -999,7 +1010,7 @@ const CarListing = ({ navigation }: any) => {
                 />
               </TouchableOpacity>
             </>
-          )}
+          )} */}
         </View>
       )}
       {responseData === null && (

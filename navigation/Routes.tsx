@@ -10,7 +10,7 @@ import DrawerNavigator from "./DrawerNavigator";
 import { COLOR } from "../constants/Colors";
 import * as SecureStore from "expo-secure-store";
 import * as Linking from "expo-linking";
-//import TableExample from '../screens/TableExample'
+import TableExample from "../screens/TableExample";
 const prefix = Linking.createURL("/");
 
 const Stack = createStackNavigator();
@@ -54,34 +54,34 @@ const Routes = () => {
   return (
     <NavigationContainer theme={MyTheme} linking={linking}>
       <Stack.Navigator>
-      {/* <Stack.Screen
-            name="TableExample"
-            component={TableExample}
-            options={{
-              headerShown: false,
-            }}
-          /> */}
+        {/* <Stack.Screen
+          name="TableExample"
+          component={TableExample}
+          options={{
+            headerShown: false,
+          }}
+        /> */}
         <Stack.Screen
-            name="login"
-            component={Login}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="signup"
-            component={Signup}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="ForgetPassword"
-            component={ForgetPassword}
-            options={{
-              headerShown: false,
-            }}
-          />
+          name="login"
+          component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="signup"
+          component={Signup}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ForgetPassword"
+          component={ForgetPassword}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="home"
           component={DrawerNavigator}

@@ -26,6 +26,7 @@ const initialState: IInitialState = {
     modelYear: [1971, 2021],
     milage: [0, 500000],
     engineCapacity: [0, 10000]
+    
   }
 };
 
@@ -76,6 +77,7 @@ const carFiltersSlice = createSlice({
         modelYear: [1971, 2021],
         milage: [0, 500000],
         engineCapacity: [0, 10000]
+ 
       };
     }
   }

@@ -69,8 +69,8 @@ const CarGridCard = (props: any) => {
           <View>
             <View style={styles.gridRow}>
               <View style={styles.gridName}>
-                <Text style={styles.carNameText}>
-                  {props.item.make} {props.item.model}
+                <Text style={styles.carNameText} > 
+                  {props.item.make} {props.item.model} 
                 </Text>
               </View>
               <View style={styles.row}>
@@ -88,15 +88,7 @@ const CarGridCard = (props: any) => {
                   }
                   style={styles.spaceMargin}
                 />
-                {/* <MaterialIcons
-                  name="favorite"
-                  onPress={() => {
-                    props.favs(props.item.isFav, props.item.id);
-                  }}
-                  size={20}
-                  color={props.item.isFav ? COLOR.primary : COLOR.secondary}
-                  style={styles.spaceMargin}
-                /> */}
+
                 {user?._id === props.item.createdBy ? null : (
                   <MaterialIcons
                     onPress={() => {
@@ -133,21 +125,26 @@ const CarGridCard = (props: any) => {
                       />
                       {props.item.isPublished === false ? (
                         <MenuOption
-                           onSelect={() => props.publishAd(props.item)}
+                          onSelect={() => props.publishAd(props.item)}
                           text="Publish"
                         />
                       ) : null}
-
-                      <MenuOption
-                         onSelect={() => props.toggleSold(props.item)}
-                        text={
-                          props.item.isSold ? "Mark as Unsold" : "Mark as Sold"
-                        }
-                      />
-                      <MenuOption
-                         onSelect={() => props.toggleActive(props.item)}
-                        text={props.item.active ? "Deactivate" : "Activate"}
-                      />
+                      {props.item.isPublished && props.item.active && (
+                        <MenuOption
+                          onSelect={() => props.toggleSold(props.item)}
+                          text={
+                            props.item.isSold
+                              ? "Mark as Unsold"
+                              : "Mark as Sold"
+                          }
+                        />
+                      )}
+                      {props.item.isPublished && !props.item.isSold && (
+                        <MenuOption
+                          onSelect={() => props.toggleActive(props.item)}
+                          text={props.item.active ? "Deactivate" : "Activate"}
+                        />
+                      )}
                     </MenuOptions>
                   </Menu>
                 )}

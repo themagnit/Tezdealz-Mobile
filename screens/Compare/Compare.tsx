@@ -1,6 +1,7 @@
 import { Entypo, EvilIcons, Ionicons } from "@expo/vector-icons";
-import { ScrollView } from "native-base";
-import React, { useEffect, useState } from "react";
+
+import React, { useEffect, useState, useRef } from "react";
+
 import {
   View,
   Button,
@@ -11,13 +12,37 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   ImageBackground,
+  ScrollView,
   FlatList,
 } from "react-native";
 import { DataTable } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { COLOR } from "../../constants/Colors";
+import { Table, Row, Rows, Col } from "react-native-table-component";
+const borderColor = "#C1C0B9";
+const primaryColor = "dodgerblue";
+const backgroundColor = "white"; // "#F7F6E7";
 
 const Compare = ({ navigation }: any) => {
+  const leftRef = useRef<ScrollView>(null);
+  const rightRef = useRef<ScrollView>(null);
+
+  const state = {
+    tableHead: [
+      "Model Year",
+      "Mileage",
+      "Engine Type",
+      "Engine Capacity",
+      "Body Color",
+      "Body Type",
+      "Transmission",
+    ],
+    widthArr: [100, 100, 100, 150, 120],
+  };
+
+  const headerHeight = 50;
+  const leftColumnWidth = 120;
+
   const [specBtn, setSpecBtn] = useState(true);
   const [featureBtn, setFeatureBtn] = useState(false);
   const [reviewBtn, setReviewBtn] = useState(false);
@@ -27,7 +52,40 @@ const Compare = ({ navigation }: any) => {
     (state: any) => state.shortlistCars.shortlistCars
   );
 
+  console.log("shortListCars", shortListCars);
   const [features, setFeatures] = useState<any>([]);
+
+  const records: any = shortListCars;
+
+  const carName: any = [];
+  const carHeader: any = [];
+  const rows: any = [];
+  records.forEach((item: any) => {
+    carName.push([`${item.make} ${item.model}`]);
+  });
+  records.forEach((item: any) => {
+    carHeader.push([
+      "Model Year",
+      "Mileage",
+      "Engine Type",
+      "Engine Capacity",
+      "Body Color",
+      "Body Type",
+      "Transmission",
+    ]);
+  });
+
+  records.forEach((item: any) => {
+    rows.push([
+      item.modelYear,
+      item.milage,
+      item.engineType,
+      item.engineCapacity,
+      item.bodyColor,
+      item.bodyType,
+      item.transmission,
+    ]);
+  });
 
   useEffect(() => {
     handleFeatures();
@@ -67,36 +125,36 @@ const Compare = ({ navigation }: any) => {
   const header = () => {
     return (
       <View style={styles.mainContainer}>
-      <View style={styles.columnContainer}>
-        <Image
-          source={{
-            uri: "https://s3.ap-south-1.amazonaws.com/cdn.carokta.com/2bdddd81-676d-4380-8c2c-ea2952ddf467.jpg",
-          }}
-          style={styles.image}
-          resizeMode="cover"
-        />
-        <View style={styles.carNameView}>
-          <Text style={styles.carNameText}>Toyota Yaris iA </Text>
-        </View>
-        <View style={styles.locationView}>
-          <EvilIcons
-            name="location"
-            size={15}
-            color={COLOR.darkBlue}
-            style={{ marginTop: 1 }}
+        <View style={styles.columnContainer}>
+          <Image
+            source={{
+              uri: "https://s3.ap-south-1.amazonaws.com/cdn.carokta.com/2bdddd81-676d-4380-8c2c-ea2952ddf467.jpg",
+            }}
+            style={styles.image}
+            resizeMode="cover"
           />
-          <Text style={styles.locationText}>Islamabad</Text>
+          <View style={styles.carNameView}>
+            <Text style={styles.carNameText}>Toyota Yaris iA </Text>
+          </View>
+          <View style={styles.locationView}>
+            <EvilIcons
+              name="location"
+              size={15}
+              color={COLOR.darkBlue}
+              style={{ marginTop: 1 }}
+            />
+            <Text style={styles.locationText}>Islamabad</Text>
+          </View>
+          <View style={styles.priceView}>
+            <Ionicons
+              name="pricetag-outline"
+              size={18}
+              color={COLOR.tabActive}
+            />
+            <Text style={[styles.priceText]}>RS 50 lakh</Text>
+          </View>
         </View>
-        <View style={styles.priceView}>
-          <Ionicons
-            name="pricetag-outline"
-            size={18}
-            color={COLOR.tabActive}
-          />
-          <Text style={[styles.priceText]}>RS 50 lakh</Text>
-        </View>
-      </View>
-      <View style={styles.circle}>
+        <View style={styles.circle}>
           <Text style={styles.circleText}>VS</Text>
         </View>
       </View>
@@ -131,53 +189,63 @@ const Compare = ({ navigation }: any) => {
           </Text>
         </TouchableOpacity>
       </View>
-
-      {/* {shortListCars && (
-        <FlatList
-          data={shortListCars}
-          //numColumns={2}
-          renderItem={({ item }) =>   <DataTable>
-      
-    
-          <DataTable.Row>
-            <DataTable.Cell>Frozen yogurt</DataTable.Cell>
-            <DataTable.Cell numeric>159</DataTable.Cell>
-            <DataTable.Cell numeric>6.0</DataTable.Cell>
-          </DataTable.Row>
-    
-          <DataTable.Row>
-            <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-            <DataTable.Cell numeric>237</DataTable.Cell>
-            <DataTable.Cell numeric>8.0</DataTable.Cell>
-          </DataTable.Row></DataTable> }
-          keyExtractor={(contact, index) => String(index)}
-
-
-        //  ListHeaderComponent={header}
-          onEndReachedThreshold={50}
-        /> 
-      )}*/}
-{/* {
-shortListCars.map((item, i) => {
-  return (
-    <>
-    <DataTable.Row>
-       <DataTable.Cell numeric>Engine</DataTable.Cell>
-       <DataTable.Cell numeric>2</DataTable.Cell>
-       <DataTable.Cell numeric>3</DataTable.Cell>
-     </DataTable.Row>
-     <DataTable.Row>
-     <DataTable.Cell numeric>Fuel Type</DataTable.Cell>
-     <DataTable.Cell numeric>2</DataTable.Cell>
-     <DataTable.Cell numeric>3</DataTable.Cell>
-   </DataTable.Row>
-   </>
-  );
-})
-} */}
-
-
       <View style={styles.mainContainer}>
+        <FlatList
+          horizontal
+          data={shortListCars}
+          renderItem={({ item, index }) => (
+            <View style={styles.columnContainer}>
+              {/* <Image
+                source={{
+                  uri: item.image[0].location,
+                }}
+                style={{ width: 200, height: 180, marginStart: 5 }}
+              /> */}
+                <ImageBackground
+           source={{
+            uri: item.image[0].location,
+          }}
+              resizeMode="cover"
+              style={{ width: 150, height: 150 }}
+            >
+              <Ionicons
+                name="ios-close-circle-outline"
+                size={24}
+                color={COLOR.primary}
+                style={{ alignSelf: "flex-end" }}
+                onPress={() => {
+                 // removePhoto(item, index);
+                }}
+              />
+            </ImageBackground>
+              <View style={styles.carNameView}>
+                <Text style={styles.carNameText}>
+                  {item.make} {item.model}
+                </Text>
+              </View>
+              <View style={styles.locationView}>
+                <EvilIcons
+                  name="location"
+                  size={15}
+                  color={COLOR.darkBlue}
+                  style={{ marginTop: 1 }}
+                />
+                <Text style={styles.locationText}>{item.city}</Text>
+              </View>
+              <View style={styles.priceView}>
+                <Ionicons
+                  name="pricetag-outline"
+                  size={18}
+                  color={COLOR.tabActive}
+                />
+                <Text style={[styles.priceText]}>RS {item.price.toLocaleString()}</Text>
+              </View>
+            </View>
+          )}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
+      {/* <View style={styles.mainContainer}>
         <View style={styles.columnContainer}>
           <Image
             source={{
@@ -241,8 +309,113 @@ shortListCars.map((item, i) => {
           <Text style={styles.circleText}>VS</Text>
         </View>
       </View>
+      */}
       <ScrollView contentContainerStyle={styles.content}>
-        {specBtn && (
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            backgroundColor: "#eee",
+            marginTop: 50,
+          }}
+        >
+          {/* Left Column */}
+          <View
+            style={{
+              width: leftColumnWidth,
+              backgroundColor: "yellow",
+              borderRightWidth: 1,
+              borderRightColor: borderColor,
+            }}
+          >
+            {/* Blank Cell */}
+            <View
+              style={{
+                height: headerHeight,
+                backgroundColor: primaryColor,
+                borderBottomWidth: 1,
+                borderBottomColor: borderColor,
+              }}
+            ></View>
+            {/* Left Container : scroll synced */}
+            <ScrollView
+              ref={leftRef}
+              style={{
+                flex: 1,
+                backgroundColor: "white",
+              }}
+              scrollEnabled={false}
+              showsVerticalScrollIndicator={false}
+            >
+              <Table
+                borderStyle={{
+                  borderWidth: 1,
+                  borderColor,
+                }}
+              >
+                {carName.map((rowData: any, index: any) => (
+                  <Row
+                    key={index}
+                    data={rowData}
+                    widthArr={[leftColumnWidth]}
+                    style={
+                      index % 2 ? styles.row : { backgroundColor, height: 50 }
+                    }
+                    textStyle={styles.text}
+                  />
+                ))}
+              </Table>
+            </ScrollView>
+          </View>
+          {/* Right Column */}
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: "white",
+            }}
+          >
+            <ScrollView horizontal={true} bounces={false}>
+              <View>
+                <Table borderStyle={{ borderWidth: 1, borderColor }}>
+                  <Row
+                    data={state.tableHead}
+                    widthArr={state.widthArr}
+                    style={styles.head}
+                    textStyle={{ ...styles.text, color: "white" }}
+                  />
+                </Table>
+                <ScrollView
+                  ref={rightRef}
+                  style={styles.dataWrapper}
+                  scrollEventThrottle={16}
+                  bounces={false}
+                  onScroll={(e) => {
+                    const { y } = e.nativeEvent.contentOffset;
+                    leftRef.current?.scrollTo({ y, animated: false });
+                  }}
+                >
+                  <Table borderStyle={{ borderWidth: 1, borderColor }}>
+                    {rows.map((rowData, index) => (
+                      <Row
+                        key={index}
+                        data={rowData}
+                        widthArr={state.widthArr}
+                        style={
+                          index % 2
+                            ? styles.row
+                            : { backgroundColor, height: 50 }
+                        }
+                        textStyle={styles.text}
+                      />
+                    ))}
+                  </Table>
+                </ScrollView>
+              </View>
+            </ScrollView>
+          </View>
+        </View>
+
+        {/* {specBtn && (
           <View style={{ marginTop: 20 }}>
             <View style={styles.listItem}>
               <Text style={styles.mainText}>Engine</Text>
@@ -314,13 +487,21 @@ shortListCars.map((item, i) => {
               <Text style={styles.subText}>yes</Text>
             </View>
           </View>
-        )}
+        )} */}
       </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  //container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: "#eee" },
+  head: { height: 50, backgroundColor: primaryColor },
+  wrapper: { flexDirection: "row" },
+  title: { flex: 1, backgroundColor: "#f6f8fa" },
+  row: { height: 50 },
+  text: { textAlign: "center" },
+  dataWrapper: { marginTop: -1 },
+
   content: {
     paddingBottom: 100,
   },
@@ -358,7 +539,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     // paddingVertical: 20,
-    paddingStart: 10,
+    paddingStart: 5,
     paddingEnd: 2,
   },
   locationView: {
@@ -431,8 +612,7 @@ const styles = StyleSheet.create({
       ) / 2,
     position: "absolute",
     top: 50,
-    left:
-      Dimensions.get("window").width - Dimensions.get("window").width / 1.85,
+    left: Dimensions.get("window").width - Dimensions.get("window").width / 1.9,
     right: 0,
     bottom: 0,
     justifyContent: "center",
@@ -446,6 +626,7 @@ const styles = StyleSheet.create({
   },
   carNameView: {
     marginTop: 10,
+    marginStart:5
   },
   carNameText: {
     fontWeight: "700",
@@ -455,157 +636,3 @@ const styles = StyleSheet.create({
 });
 
 export default Compare;
-
-// import { StatusBar } from 'expo-status-bar';
-// import React from 'react';
-// import {
-//   StyleSheet,
-//   Text,
-//   View,
-//   SectionList,
-//   SafeAreaView,
-//   Image,
-//   FlatList,
-// } from 'react-native';
-
-// const ListItem = ({ item }) => {
-//   return (
-//     <View style={styles.item}>
-//       <Image
-//         source={{
-//           uri: item.uri,
-//         }}
-//         style={styles.itemPhoto}
-//         resizeMode="cover"
-//       />
-//       <Text style={styles.itemText}>{item.text}</Text>
-//     </View>
-//   );
-// };
-
-// export default () => {
-//   return (
-//     <View style={styles.container}>
-//       <StatusBar style="light" />
-//       <SafeAreaView style={{ flex: 1 }}>
-//         <SectionList
-//           contentContainerStyle={{ paddingHorizontal: 10 }}
-//           stickySectionHeadersEnabled={false}
-//           sections={SECTIONS}
-//           renderSectionHeader={({ section }) => (
-//             <>
-//               <Text style={styles.sectionHeader}>{section.title}</Text>
-//               {section.horizontal ? (
-//                 <FlatList
-//                   horizontal
-//                   data={section.data}
-//                   renderItem={({ item }) => <ListItem item={item} />}
-//                   showsHorizontalScrollIndicator={false}
-//                 />
-//               ) : null}
-//             </>
-//           )}
-//           renderItem={({ item, section }) => {
-//             if (section.horizontal) {
-//               return null;
-//             }
-//             return <ListItem item={item} />;
-//           }}
-//         />
-//       </SafeAreaView>
-//     </View>
-//   );
-// };
-
-// const SECTIONS = [
-//   {
-//     title: 'Made for you',
-//     horizontal: true,
-//     data: [
-//       {
-//         key: '1',
-//         text: 'Item text 1',
-//         uri: 'https://picsum.photos/id/1/200',
-//       },
-//       {
-//         key: '2',
-//         text: 'Item text 2',
-//         uri: 'https://picsum.photos/id/10/200',
-//       },
-
-//       {
-//         key: '3',
-//         text: 'Item text 3',
-//         uri: 'https://picsum.photos/id/1002/200',
-//       },
-//       {
-//         key: '4',
-//         text: 'Item text 4',
-//         uri: 'https://picsum.photos/id/1006/200',
-//       },
-//       {
-//         key: '5',
-//         text: 'Item text 5',
-//         uri: 'https://picsum.photos/id/1008/200',
-//       },
-//     ],
-//   },
-//   {
-//     title: 'Punk and hardcore',
-//     horizontal: true,
-//     data: [
-//       {
-//         key: '1',
-//         text: 'Item text 1',
-//         uri: 'https://picsum.photos/id/1011/200',
-//       },
-//       {
-//         key: '2',
-//         text: 'Item text 2',
-//         uri: 'https://picsum.photos/id/1012/200',
-//       },
-
-//       {
-//         key: '3',
-//         text: 'Item text 3',
-//         uri: 'https://picsum.photos/id/1013/200',
-//       },
-//       {
-//         key: '4',
-//         text: 'Item text 4',
-//         uri: 'https://picsum.photos/id/1015/200',
-//       },
-//       {
-//         key: '5',
-//         text: 'Item text 5',
-//         uri: 'https://picsum.photos/id/1016/200',
-//       },
-//     ],
-//   },
-
-// ];
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#121212',
-//   },
-//   sectionHeader: {
-//     fontWeight: '800',
-//     fontSize: 18,
-//     color: '#f4f4f4',
-//     marginTop: 20,
-//     marginBottom: 5,
-//   },
-//   item: {
-//     margin: 10,
-//   },
-//   itemPhoto: {
-//     width: 200,
-//     height: 200,
-//   },
-//   itemText: {
-//     color: 'rgba(255, 255, 255, 0.5)',
-//     marginTop: 5,
-//   },
-// });

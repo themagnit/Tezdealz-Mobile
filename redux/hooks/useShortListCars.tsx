@@ -21,7 +21,7 @@ const useShortListCars = () => {
 
   const shortListItem = (newItem: any) => {
     let response = { status: "", message: "" };
-    if (shortlistCars.length < 2) {
+    if (shortlistCars.length < 5) {
       if (!ItemExists(newItem._id)) {
         dispatch(setShortlistCars([...shortlistCars, newItem]));
         response = { status: "success", message: "Car added" };
@@ -34,7 +34,7 @@ const useShortListCars = () => {
     } else {
       response = {
         status: "error",
-        message: "Can't select more than 2 cars",
+        message: "Can't select more than 5 cars",
       };
     }
     return response;

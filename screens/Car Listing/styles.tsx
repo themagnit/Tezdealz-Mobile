@@ -261,15 +261,27 @@ searchIcon: {
     padding: 10,
 },
 input1: {
-   // flex: 1,
-    width: '80%',
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-    paddingLeft: 0,
-    backgroundColor: '#fff',
-    borderWidth:1,
-    borderColor: COLOR.tabInctive
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: "#fff",
+  borderWidth: 0.5,
+  borderColor: "#000",
+  height: 40,
+  borderRadius: 5,
+  marginVertical: 10,
+},
+headerContainer:{
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  margin: 10,
+},
+subHeader:{
+  flexDirection: "row",
+  flex: 1,
+  justifyContent: "center",
 }
+
 
 });
