@@ -22,7 +22,7 @@ import FavouriteCar from "../screens/Favourite/FavouriteCar";
 import Profile from "../screens/Profile/Profile";
 import YourAdd from "../screens/Your Add/YourAdd";
 import CompletePost from "../screens/AddPost/CompletePost/CompletePost";
-import Search from "../screens/Search/Search";
+import Location from "../screens/Location/Location";
 import { COLOR } from "../constants/Colors";
 import ChangePassword from "../screens/Settings/ChangePassword";
 import CompareCar from "../screens/CompareCar/CompareCar";
@@ -51,8 +51,8 @@ const HomeStackNavigator = ({ navigation }: any) => {
       />
       <Stack.Screen name="Car Details" component={CarDetails} />
       <Stack.Screen
-        name="search"
-        component={Search}
+        name="Location"
+        component={Location}
         options={{ headerShown: false }}
       />
       <Stack.Screen

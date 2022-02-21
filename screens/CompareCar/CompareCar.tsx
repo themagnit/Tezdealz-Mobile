@@ -77,7 +77,6 @@ const CompareCar = ({ navigation }: any) => {
   );
   const [campareData, setCompareData] = useState(shortListCars);
 
- 
   const [features, setFeatures] = useState<any>([]);
   const [featureWidth, setFeatureWidth] = useState<any>([]);
   const [featureHeight, setFeatureHeight] = useState<any>([]);
@@ -124,7 +123,6 @@ const CompareCar = ({ navigation }: any) => {
     ]);
   });
 
-
   useEffect(() => {
     handleFeatures();
     // eslint-disable-next-line
@@ -132,6 +130,7 @@ const CompareCar = ({ navigation }: any) => {
 
   useEffect(() => {
     setCompareData(shortListCars);
+   // handleFeatures();
     // eslint-disable-next-line
   }, [shortListCars]);
 
@@ -149,11 +148,8 @@ const CompareCar = ({ navigation }: any) => {
     });
     setFeatures(uniqueArray);
 
-
     let result: any = uniqueArray.map((key) => 100);
     let result1: any = uniqueArray.map((key) => 50);
-
-
 
     setFeatureWidth(result);
     setFeatureHeight(result1);
@@ -318,6 +314,7 @@ const CompareCar = ({ navigation }: any) => {
     ></Image>
   );
   const Features = () => {
+    console.log('featuresList',featuresList)
     return (
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.tableContainer}>
@@ -402,11 +399,9 @@ const CompareCar = ({ navigation }: any) => {
                   </Table> */}
                   <Table
                     style={{ flexDirection: "row" }}
-                    borderStyle={{ borderWidth: 1 ,borderColor}}
+                    borderStyle={{ borderWidth: 1, borderColor }}
                   >
-                    {/* Left Wrapper */}
-
-                    {/* Right Wrapper */}
+                 
                     <TableWrapper>
                       <Rows
                         data={featuresList}
@@ -437,21 +432,17 @@ const CompareCar = ({ navigation }: any) => {
           </View>
 
           <View style={styles.mainContainer}>
-            <View style={styles.columnContainer}>
+            <View style={styles.columnContainer1}>
               <Image
-                source={{
-                  uri: "https://s3.ap-south-1.amazonaws.com/cdn.carokta.com/2bdddd81-676d-4380-8c2c-ea2952ddf467.jpg",
-                }}
+                source={require("../.././assets/images/commonImage.jpg")}
                 style={styles.image}
                 resizeMode="cover"
               />
             </View>
 
-            <View style={styles.columnContainer}>
+            <View style={[styles.columnContainer1,{paddingEnd:10}]}>
               <Image
-                source={{
-                  uri: "https://s3.ap-south-1.amazonaws.com/cdn.carokta.com/2bdddd81-676d-4380-8c2c-ea2952ddf467.jpg",
-                }}
+                source={require("../.././assets/images/commonImage.jpg")}
                 style={styles.image}
                 resizeMode="cover"
               />
@@ -549,12 +540,12 @@ const CompareCar = ({ navigation }: any) => {
                     </View>
                     <View style={{ marginBottom: 10 }}>
                       <TouchableOpacity
-                        style={styles.commonBtn}
+                        style={[styles.commonBtn,{backgroundColor:'grey'}]}
                         onPress={() => {
                           removeShortListed(item._id);
                         }}
                       >
-                        <Text style={styles.commonBtnText}>remove</Text>
+                        <Text style={styles.commonBtnText}>Remove</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -686,8 +677,12 @@ const styles = StyleSheet.create({
   },
 
   columnContainer: {
-    // flexDirection: "column",
-    // flex: 1,
+    paddingStart: 10,
+    //   paddingEnd: 2,
+  },
+  columnContainer1: {
+    flexDirection: "column",
+    flex: 1,
 
     paddingStart: 10,
     //   paddingEnd: 2,

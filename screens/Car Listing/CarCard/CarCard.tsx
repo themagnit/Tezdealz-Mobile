@@ -71,8 +71,12 @@ const CarCard = (props: any) => {
               </Text>
             </View>
             <View style={[styles.mainContainer]}>
-              <View>
-                <Text style={styles.carNameText}>
+              <View style={{ width: "70%" }}>
+                <Text
+                  style={styles.carNameText}
+                  ellipsizeMode="tail"
+                  numberOfLines={1}
+                >
                   {props.item.make} {props.item.model}
                 </Text>
               </View>

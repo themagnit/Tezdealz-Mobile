@@ -79,7 +79,15 @@ const carFiltersSlice = createSlice({
         engineCapacity: [0, 10000]
  
       };
-    }
+    },
+    resetLocation: (state) => {
+      state.filters = {
+       ...state.filters,
+        city: [],
+      
+ 
+      };
+    },
   }
 });
 
@@ -89,7 +97,8 @@ export const {
   setFilters,
   removeFilter,
   removeArrayFilter,
-  resetFilters
+  resetFilters,
+  resetLocation
 } = carFiltersSlice.actions;
 
 export default carFiltersSlice.reducer;

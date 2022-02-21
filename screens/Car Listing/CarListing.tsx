@@ -50,6 +50,7 @@ import {
   removeArrayFilter,
   setArrayFilter,
   resetFilters,
+  resetLocation,
   removeFilter,
 } from "../../redux/Reducers/carFiltersSlice";
 import { getKeyValue } from "../../constants/helperFunctions";
@@ -83,12 +84,16 @@ const initialRangeValues: any = {
   engineCapacity: [0, 10000],
 };
 
-const CarListing = ({ navigation }: any) => {
+const CarListing = ({ route, navigation }: any) => {
   const toast = useToast();
   const dispatch = useDispatch();
 
   const carFilters = useSelector((state: any) => state.carFilters.filters);
   const { shortlistCars } = useSelector((state: any) => state.shortlistCars);
+  const reducerStates = useSelector((state) => state);
+  const userProfile = reducerStates.auth.user;
+
+  const [currentCity, setCurrentCity] = useState(userProfile.city || "");
 
   const { clearShortListedCars, removeShortListItem, shortListItem } =
     useShortListCars();
@@ -463,6 +468,7 @@ const CarListing = ({ navigation }: any) => {
   };
 
   const handleLoadMore = () => {
+    console.log("page", page);
     setPage(page + 1);
     getAllCars();
   };
@@ -483,8 +489,20 @@ const CarListing = ({ navigation }: any) => {
     getAllCars(searchQuery);
   };
 
+  useEffect(() => {
+    if (route && route.params) {
+      let filter = {
+        name: "city",
+        value: route.params.cityName,
+      };
+      dispatch(resetLocation());
+      dispatch(setArrayFilter(filter));
+    }
+  }, [route && route.params]);
+
   const getAllCars = async (keyword: any = "") => {
     let params = `?limit=20&page=${page.toString()}`;
+    console.log("carFilters", carFilters);
     debugger;
     Object.entries(carFilters).map(([keys, values]: any) => {
       debugger;
@@ -579,7 +597,20 @@ const CarListing = ({ navigation }: any) => {
     });
     dispatch(resetFilters());
     // setFilterVisible(!filterVisible);
-    // getAllCars();
+    setPage(1);
+    getAllCars();
+    getCitiesWithCars();
+    getMakes();
+    getModels();
+    getBodyTypes();
+    getBodyColors();
+    getTransmission();
+    getEngineType();
+    getAssembly();
+    getSellarType();
+    getSortData();
+    getCitiesData();
+    getStateData();
   };
 
   useEffect(() => {
@@ -817,7 +848,7 @@ const CarListing = ({ navigation }: any) => {
                   onPress={() => {
                     setSearchQuery("");
                     setSearchIcon(false);
-                    getAllCars()
+                    getAllCars();
                   }}
                 />
 
@@ -858,7 +889,12 @@ const CarListing = ({ navigation }: any) => {
                 }}
               />
               <View style={styles.subHeader}>
-                <TouchableOpacity style={styles.subHeader}>
+                <TouchableOpacity
+                  style={styles.subHeader}
+                  onPress={() => {
+                    navigation.navigate("Location");
+                  }}
+                >
                   <EvilIcons
                     name="location"
                     size={20}
@@ -867,7 +903,9 @@ const CarListing = ({ navigation }: any) => {
                   />
                   <View style={{ flexDirection: "column" }}>
                     <Text style={{ color: COLOR.headerColor, fontSize: 14 }}>
-                      Islamabad
+                      {route && route.params
+                        ? route.params.cityName
+                        : currentCity}
                     </Text>
                     <Text style={{ color: COLOR.tabActive, fontSize: 9 }}>
                       Change location
@@ -922,7 +960,7 @@ const CarListing = ({ navigation }: any) => {
 
           <Text style={styles.resultText}>
             {responseData !== null ? responseData?.totalCount : 0} results in
-            islamabad
+            {currentCity}
           </Text>
         </View>
 

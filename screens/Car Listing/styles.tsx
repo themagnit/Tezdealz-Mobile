@@ -21,7 +21,7 @@ export default StyleSheet.create({
     elevation: 8,
   },
   backGroundImage: {
-    flex: 0.5,
+    flex: 0.7,
     marginVertical: 1,
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
@@ -189,7 +189,8 @@ export default StyleSheet.create({
   card: {
     marginStart: 10,
     flex: 1,
-    paddingBottom: 5,
+    marginVertical:10
+ 
   },
   priceText: {
     fontWeight: "500",
@@ -216,7 +217,7 @@ export default StyleSheet.create({
   },
   gridImage: {
     height: 120,
-    width: 185,
+    width: '100%',
   },
   gridRow: {
     flexDirection: "row",
@@ -237,7 +238,7 @@ export default StyleSheet.create({
     marginTop: 5,
   },
   listDate: {
-    marginTop: 3,
+   // marginTop: 3,
   },
   defaultImage: {
     height: 100,
@@ -247,41 +248,36 @@ export default StyleSheet.create({
     borderBottomLeftRadius: 5,
   },
 
-
-
   searchSection: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     // justifyContent: 'center',
     // alignItems: 'center',
-    backgroundColor: '#fff',
-  
-},
-searchIcon: {
+    backgroundColor: "#fff",
+  },
+  searchIcon: {
     padding: 10,
-},
-input1: {
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-  backgroundColor: "#fff",
-  borderWidth: 0.5,
-  borderColor: "#000",
-  height: 40,
-  borderRadius: 5,
-  marginVertical: 10,
-},
-headerContainer:{
-  flex: 1,
-  justifyContent: "center",
-  alignItems: "center",
-  margin: 10,
-},
-subHeader:{
-  flexDirection: "row",
-  flex: 1,
-  justifyContent: "center",
-}
-
-
+  },
+  input1: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderWidth: 0.5,
+    borderColor: "#000",
+    height: 40,
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  headerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+  },
+  subHeader: {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "center",
+  },
 });

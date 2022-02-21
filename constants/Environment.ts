@@ -34,6 +34,8 @@ export const endPoints = {
     PROVINCE: "/v1/ads/cars/states/country-code/",
     NEED_ASSISTANCE: "/v1/tickets/advAssistance",
     IMAGE_UPLOAD: "/v1/ads/cars/car-images",
+    FORGET_PASSWORD:"/v1/Users/forgotPassword",
+    RESET_PASSWORD:"/v1/Users/resetPassword"
   },
   mode: "Development",
 };

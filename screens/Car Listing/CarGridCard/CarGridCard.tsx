@@ -69,7 +69,7 @@ const CarGridCard = (props: any) => {
           <View>
             <View style={styles.gridRow}>
               <View style={styles.gridName}>
-                <Text style={styles.carNameText} > 
+                <Text style={styles.carNameText} ellipsizeMode="tail" numberOfLines={1}> 
                   {props.item.make} {props.item.model} 
                 </Text>
               </View>

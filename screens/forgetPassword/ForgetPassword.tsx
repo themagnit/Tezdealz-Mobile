@@ -1,12 +1,21 @@
 import React, { memo, useState } from "react";
 import { TouchableOpacity, StyleSheet, Image, Text, View } from "react-native";
-import { TextInput, Button } from "../../components/index";
+import { TextInput, Button, Loader } from "../../components/index";
 import { theme } from "../../constants/theme";
 import { LinearGradient } from "expo-linear-gradient";
 import OTPTextView from "react-native-otp-textinput";
 import { COLOR } from "../../constants/Colors";
-
+import { endPoints } from "../../constants/Environment";
+import { addData, updateUser } from "../../Utility/API";
+import { nameValidator } from "../../Utility/commonUtils";
+import { useToast } from "native-base";
+import { TextInput as Input, RadioButton } from "react-native-paper";
+import {
+  validateConfirmPassword,
+  validatePassword,
+} from "../../Utility/functions/validations";
 const ForgetPassword = ({ navigation }: any) => {
+  const toast = useToast();
   const [email, setEmail] = useState({ value: "", error: "" });
   const [otpInput, setOtpInput] = useState({ value: "", error: "" });
   const [otp, setOtp] = useState(false);
@@ -18,15 +27,22 @@ const ForgetPassword = ({ navigation }: any) => {
     error: "",
   });
   const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [newSecureTextEntry, setNewSecureTextEntry] = useState(true);
+  const [conSecureTextEntry, setConSecureTextEntry] = useState(true);
 
-  const _onLoginPressed = () => {
-    setOtp(true);
-    setEmailInput(false);
-    // navigation.navigate('login');
-  };
+  // const _onLoginPressed = () => {
+  //   setOtp(true);
+  //   setEmailInput(false);
+  //   // navigation.navigate('login');
+  // };
   const _onNext = () => {
-    setOtp(false);
-    setPasswordFlag(true);
+    if (otpInput && otpInput.value.length == 4) {
+      setOtp(false);
+      setPasswordFlag(true);
+    } else {
+      alert("enter otp");
+    }
   };
 
   const _onSubmit = () => {
@@ -35,6 +51,89 @@ const ForgetPassword = ({ navigation }: any) => {
   };
   const _onLogin = () => {
     navigation.navigate("login");
+  };
+
+  const _onforgetPressed = async () => {
+    const emailError = nameValidator(email.value);
+    if (emailError) {
+      setEmail({ ...email, error: emailError });
+      return;
+    }
+    let data = {
+      data: email.value,
+    };
+
+    let url = `${endPoints.api.FORGET_PASSWORD}`;
+    setIsLoading(true);
+    await addData(url, data)
+      .then((response) => {
+        console.log("data", response);
+
+        console.log("response.data", response.data);
+
+        setIsLoading(false);
+        if (response && response.data && response.data.status === "success") {
+          toast.show({
+            title: "OTP sent successfully",
+            status: "success",
+          });
+          setOtp(true);
+          setEmailInput(false);
+        } else {
+          toast.show({
+            title: "Please Enter Valid Email/Please Enter Valid Phone Number",
+            status: "error",
+          });
+        }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error(error);
+      });
+  };
+
+  const _resetPassword = async () => {
+    const passError = validatePassword(password.value);
+
+    const confirmPassError = validateConfirmPassword(
+      confirmPassword.value,
+      password.value
+    );
+
+    if (passError || confirmPassError) {
+      setPassword({ ...password, error: passError });
+      setConfirmPassword({ ...confirmPassword, error: confirmPassError });
+
+      return;
+    }
+    setIsLoading(true);
+    let url = `${endPoints.api.RESET_PASSWORD}/${otpInput.value}`;
+    await updateUser(url, {
+      password: password.value,
+      passwordConfirm: confirmPassword.value,
+    })
+      .then((response) => {
+        setIsLoading(false);
+        if (response.status === "success") {
+          setPasswordFlag(false);
+          setSuccess(true);
+          console.log(response);
+          toast.show({
+            title: response.message, //   "Password has been updated Successfully",
+            status: "success",
+          });
+        } else {
+          // setOpen(true);
+          console.log(response);
+          toast.show({
+            title: response.message,
+            status: "error",
+          });
+        }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -46,6 +145,7 @@ const ForgetPassword = ({ navigation }: any) => {
             source={require("../.././assets/images/Carokta_Logo.png")}
           />
         </View>
+        <Loader loading={isLoading} />
         {emailInput && (
           <View>
             <Text style={styles.header}>Account Recovery</Text>
@@ -62,11 +162,10 @@ const ForgetPassword = ({ navigation }: any) => {
               error={!!email.error}
               errorText={email.error}
               autoCapitalize="none"
-              autoCompleteType="email"
               textContentType="emailAddress"
               keyboardType="email-address"
             />
-            <TouchableOpacity onPress={_onLoginPressed} style={styles.button}>
+            <TouchableOpacity onPress={_onforgetPressed} style={styles.button}>
               <Text style={styles.text}>Continue</Text>
             </TouchableOpacity>
           </View>
@@ -100,7 +199,13 @@ const ForgetPassword = ({ navigation }: any) => {
               onChangeText={(text) => setPassword({ value: text, error: "" })}
               error={!!password.error}
               errorText={password.error}
-              secureTextEntry={true}
+              secureTextEntry={newSecureTextEntry}
+              right={
+                <Input.Icon
+                  name="eye"
+                  onPress={() => setNewSecureTextEntry(!newSecureTextEntry)}
+                />
+              }
             />
             <TextInput
               label="Confirm New Password"
@@ -112,9 +217,15 @@ const ForgetPassword = ({ navigation }: any) => {
               }
               error={!!confirmPassword.error}
               errorText={confirmPassword.error}
-              secureTextEntry={true}
+              secureTextEntry={conSecureTextEntry}
+              right={
+                <Input.Icon
+                  name="eye"
+                  onPress={() => setConSecureTextEntry(!conSecureTextEntry)}
+                />
+              }
             />
-            <TouchableOpacity onPress={_onSubmit} style={styles.button}>
+            <TouchableOpacity onPress={_resetPassword} style={styles.button}>
               <Text style={styles.text}>Submit</Text>
             </TouchableOpacity>
           </View>

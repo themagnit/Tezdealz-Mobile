@@ -103,23 +103,7 @@ export const TabBar: React.FC<Props> = ({ barColor = COLOR.White }) => (
         ),
       }}
     />
-    {/* <BottomBar.Screen
-      name="Browse Car"
-      component={BrowseStackNavigator}
-      options={{
-        tabBarIcon: ({ color, focused }) => (
-          <View style={styles.tabHeader}>
-            {focused && <View style={styles.activeView} />}
-            <Ionicons
-              name="car-outline"
-              size={24}
-              color={color}
-              style={styles.icon}
-            />
-          </View>
-        ),
-      }}
-    /> */}
+ 
     <BottomBar.Screen
       name="Help"
       component={HelpStackNavigator}
@@ -171,8 +155,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    // shadowOpacity: 0.22,
-    // shadowRadius: 2.22,
+
   },
   navigator: {
     borderTopWidth: 0,
