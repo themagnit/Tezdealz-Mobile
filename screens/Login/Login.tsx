@@ -24,7 +24,7 @@ import { useToast } from "native-base";
 import {
   nameValidator,
   passwordValidator,
-  save,
+  save,saveUser,
 } from "../../Utility/commonUtils";
 
 
@@ -67,6 +67,7 @@ const Login = ({ navigation }: any) => {
           getAuthentication(response.data.token, response.data.data.user)
         );
         save("token", response.data.token);
+        saveUser("user", response.data.data.user);
         navigation.replace("home");
       } else {
         toast.show({

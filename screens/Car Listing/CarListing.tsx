@@ -78,10 +78,14 @@ const initialValues: any = {
 };
 
 const initialRangeValues: any = {
-  price: [0, 50000000],
-  modelYear: [1971, 2021],
-  milage: [0, 500000],
-  engineCapacity: [0, 10000],
+  //price: [0, 50000000],
+  // modelYear: [1971, 2021],
+  // milage: [0, 500000],
+  // engineCapacity: [0, 10000],
+  price: ["", ""],
+  modelYear: ["", ""],
+  milage: ["", ""],
+  engineCapacity: ["", ""],
 };
 
 const CarListing = ({ route, navigation }: any) => {
@@ -93,7 +97,7 @@ const CarListing = ({ route, navigation }: any) => {
   const reducerStates = useSelector((state) => state);
   const userProfile = reducerStates.auth.user;
 
-  const [currentCity, setCurrentCity] = useState(userProfile.city || "");
+  const [currentCity, setCurrentCity] = useState(userProfile?.city || "");
 
   const { clearShortListedCars, removeShortListItem, shortListItem } =
     useShortListCars();
@@ -119,10 +123,14 @@ const CarListing = ({ route, navigation }: any) => {
   const [number, onChangeNumber] = React.useState(null);
 
   const [rangeValues, setRangeValues] = useState<any>({
-    price: [0, 50000000],
-    modelYear: [1971, 2021],
-    milage: [0, 500000],
-    engineCapacity: [0, 10000],
+    // price: [0, 50000000],
+    // modelYear: [1971, 2021],
+    // milage: [0, 500000],
+    // engineCapacity: [0, 10000],
+    price: ["", ""],
+    modelYear: ["", ""],
+    milage: ["", ""],
+    engineCapacity: ["", ""],
   });
 
   const [bodyTypes, setBodyTypes] = useState<any>([]);
@@ -503,9 +511,8 @@ const CarListing = ({ route, navigation }: any) => {
   const getAllCars = async (keyword: any = "") => {
     let params = `?limit=20&page=${page.toString()}`;
     console.log("carFilters", carFilters);
-    debugger;
+
     Object.entries(carFilters).map(([keys, values]: any) => {
-      debugger;
       if (values !== initialValues[keys]) {
         if (typeof values === typeof [] && !(keys in initialRangeValues)) {
           // eslint-disable-next-line
@@ -590,10 +597,14 @@ const CarListing = ({ route, navigation }: any) => {
 
   const resetForm = () => {
     setRangeValues({
-      price: [0, 50000000],
-      modelYear: [1971, 2021],
-      milage: [0, 500000],
-      engineCapacity: [0, 10000],
+      // price: [0, 50000000],
+      //  modelYear: [1971, 2021],
+      //  milage: [0, 500000],
+      //  engineCapacity: [0, 10000],
+      price: ["", ""],
+      modelYear: ["", ""],
+      milage: ["", ""],
+      engineCapacity: ["", ""],
     });
     dispatch(resetFilters());
     // setFilterVisible(!filterVisible);
@@ -959,8 +970,8 @@ const CarListing = ({ route, navigation }: any) => {
           <Text style={styles.carText}>Your Next Dream Car</Text>
 
           <Text style={styles.resultText}>
-            {responseData !== null ? responseData?.totalCount : 0} results in
-            {currentCity}
+            {responseData !== null ? responseData?.totalCount : 0} results in{" "}
+            {route && route.params ? route.params.cityName : currentCity}
           </Text>
         </View>
 

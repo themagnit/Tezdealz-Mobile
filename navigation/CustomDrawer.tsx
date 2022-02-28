@@ -23,12 +23,13 @@ import {
   Entypo,
 } from "@expo/vector-icons";
 import { COLOR } from "../constants/Colors";
-
+import { getLogout } from "../redux/Actions/authenticationActions";
+import { useDispatch } from "react-redux";
 export function CustomDrawerContent(props: any) {
+  const dispatch = useDispatch();
   const signOut = () => {
-    SecureStore.deleteItemAsync("token").then(
-      props.navigation.navigate("login")
-    );
+    SecureStore.deleteItemAsync("token").then(console.log("done"));
+    dispatch(getLogout());
   };
   return (
     <View style={styles.container}>

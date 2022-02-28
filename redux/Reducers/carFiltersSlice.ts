@@ -22,10 +22,14 @@ const initialState: IInitialState = {
     sort: '',
     condition: '',
     keyword: '',
-    price: [0, 50000000],
-    modelYear: [1971, 2021],
-    milage: [0, 500000],
-    engineCapacity: [0, 10000]
+   // price: [0, 50000000],
+    // modelYear: [1971, 2021],
+    // milage: [0, 500000],
+    // engineCapacity: [0, 10000]
+    price: ["", ""],
+    modelYear: ["", ""],
+    milage: ["", ""],
+    engineCapacity: ["", ""],
     
   }
 };
@@ -73,10 +77,14 @@ const carFiltersSlice = createSlice({
         sort: '',
         condition: '',
         keyword: '',
-        price: [0, 50000000],
-        modelYear: [1971, 2021],
-        milage: [0, 500000],
-        engineCapacity: [0, 10000]
+        //price: [0, 50000000],
+        // modelYear: [1971, 2021],
+        // milage: [0, 500000],
+        // engineCapacity: [0, 10000]
+        price: ["", ""],
+        modelYear: ["", ""],
+        milage: ["", ""],
+        engineCapacity: ["", ""],
  
       };
     },

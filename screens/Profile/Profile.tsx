@@ -68,7 +68,7 @@ const Profile = ({ navigation }: any) => {
     { label: userProfile.gender, value: userProfile.gender } || ""
   );
   const [gender1, setGender1] = useState({ value: userProfile.gender || "", error: "" });
-    console.log('userProfile',userProfile)
+ 
   const [date, setDate] = useState(dob);
   const [image, setImage] = useState(userProfile.image || null);
   const [cities, setCities] = useState([]);
@@ -153,8 +153,6 @@ const Profile = ({ navigation }: any) => {
   const updateProfile = async () => {
     //UPDATE_PROFILE
 
-    console.log("image", selectedTeam , 'gender',gender);
-    debugger
     setIsLoading(true);
     console.log(date);
     var formData = new FormData();

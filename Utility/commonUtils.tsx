@@ -51,3 +51,8 @@ export async function getToken(key: any) {
 export async function save(key: any, value: any) {
   await SecureStore.setItemAsync(key, value);
 }
+
+export async function saveUser(key: any, value: any) {
+  await SecureStore.setItemAsync(key, JSON.stringify(value));
+}
+

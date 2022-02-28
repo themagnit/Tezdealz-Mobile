@@ -6,7 +6,7 @@ export const getAuthentication = (token = "", data = {}) =>(dispatch: (arg0: { t
     });
   };
 
-export const getLogout = () => (dispatch: (arg0: { type: any }) => void) => {
+export const getLogout = (token = "", data = {}) => (dispatch: (arg0: { type: any }) => void) => {
   dispatch({ type: ReducerConstants.LOGOUT });
 };
 

@@ -41,7 +41,3 @@ export const endPoints = {
 };
 
 export default {};
-
-// export const getFavs = "ads/cars/favourites?limit=4&page=";
-// export const addToFavs = "ads/cars/add-to-fav";
-// export const removeFavs = "ads/cars/remove-from-fav";

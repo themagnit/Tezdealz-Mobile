@@ -106,7 +106,7 @@ const CarCard = (props: any) => {
                     style={styles.spaceMargin}
                   />
                 )}
-                {user._id === props.item.createdBy && (
+                {user?._id === props.item.createdBy && (
                   <Menu>
                     <MenuTrigger>
                       <MaterialCommunityIcons
