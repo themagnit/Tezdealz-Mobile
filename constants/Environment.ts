@@ -1,6 +1,6 @@
 export const endPoints = {
   apiBaseUrl: "http://api.tezdealz.com/",
-  //  apiBaseUrl:"https://beta-api.carokta.com/",
+  //apiBaseUrl: "https://beta-api.carokta.com/",
 
   api: {
     LOGIN_ENDPOINT: "v1/Users/login",
@@ -34,8 +34,11 @@ export const endPoints = {
     PROVINCE: "/v1/ads/cars/states/country-code/",
     NEED_ASSISTANCE: "/v1/tickets/advAssistance",
     IMAGE_UPLOAD: "/v1/ads/cars/car-images",
-    FORGET_PASSWORD:"/v1/Users/forgotPassword",
-    RESET_PASSWORD:"/v1/Users/resetPassword"
+    FORGET_PASSWORD: "/v1/Users/forgotPassword",
+    RESET_PASSWORD: "/v1/Users/resetPassword",
+    GENERAL_TICKET:"v1/tickets/techAssistance",
+    CAR_INSPECTION:"v1/appointments/car_inspection"
+
   },
   mode: "Development",
 };

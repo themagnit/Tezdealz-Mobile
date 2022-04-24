@@ -216,6 +216,7 @@ const Signup = ({ navigation }: any) => {
               onChangeText={(text) => setPhone({ value: text, error: "" })}
               error={!!phone.error}
               errorText={phone.error}
+            
             />
           )}
 

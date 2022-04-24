@@ -9,12 +9,14 @@ import {
   FontAwesome as Icon,
   MaterialIcons,
   Ionicons,
+  MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
 import { TabBarAdvancedButton } from "../components/index";
 import { IS_IPHONE_X } from "../Utility";
 
 import {
+  AutoStoreStackNavigator,
   BrowseStackNavigator,
   CompareStackNavigator,
   HelpStackNavigator,
@@ -103,7 +105,21 @@ export const TabBar: React.FC<Props> = ({ barColor = COLOR.White }) => (
         ),
       }}
     />
- 
+     {/* <BottomBar.Screen
+      name="Auto-Store"
+      component={AutoStoreStackNavigator}
+      options={{
+        tabBarIcon: ({ color, focused }) => (
+          <View style={styles.tabHeader}>
+            {focused && <View style={styles.activeView} />}
+            <MaterialCommunityIcons name="car"  size={24}
+              color={color}
+              style={styles.icon}/>
+        
+          </View>
+        ),
+      }}
+    /> */}
     <BottomBar.Screen
       name="Help"
       component={HelpStackNavigator}

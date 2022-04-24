@@ -41,10 +41,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 50,
     height: 50,
-    borderRadius: 27,
+    borderRadius: 25,
   },
   buttonIcon: {
-    fontSize: 24,
+    fontSize: 40,
     color: "#FFFFFF",
+    fontWeight:'bold'
   },
 });

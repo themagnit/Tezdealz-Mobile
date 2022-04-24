@@ -29,6 +29,31 @@ const placeholder = {
   value: null,
   color: "#9EA0A4",
 };
+const carAdTypeList = [
+  {
+    label: "Sell",
+    value: "Sell",
+  },
+  {
+    label: "Rental",
+    value: "Rental",
+  },
+];
+
+const carRentType = [
+  {
+    label: "Daily",
+    value: "Daily",
+  },
+  {
+    label: "Weekly",
+    value: "Weekly",
+  },
+  {
+    label: "Monthly",
+    value: "Monthly",
+  },
+];
 
 const CarInformation = ({
   navigation,
@@ -39,7 +64,6 @@ const CarInformation = ({
   onDelete,
   needAssistance,
 }: any) => {
-
   const [description, setDescription] = useState({
     value: formData.description || "",
     error: "",
@@ -54,6 +78,11 @@ const CarInformation = ({
   });
   const [price, setPrice] = useState({
     value: formData.price || "",
+    error: "",
+  });
+
+  const [rentalCharge, setRentalCharge] = useState({
+    value: "",
     error: "",
   });
 
@@ -109,6 +138,17 @@ const CarInformation = ({
     value: formData.modelYear || "",
     error: "",
   });
+
+  const [AdType, setAdType] = useState({
+    value: "Sell",
+    error: "",
+  });
+
+  const [rentType, setrentType] = useState({
+    value: "Daily",
+    error: "",
+  });
+  const [priceShow, setPriceShow] = useState(true);
 
   const fetchMakes = () => {
     setIsLoading(true);
@@ -243,6 +283,9 @@ const CarInformation = ({
     const priceError = nameValidator(price.value);
     const regNoError = nameValidator(registrationNo.value);
     const desError = nameValidator(description.value);
+    const adTypeError = nameValidator(AdType.value);
+    const rentTypeError = nameValidator(rentType.value);
+    const rentalChargeError = nameValidator(rentalCharge.value);
     if (mileageError || priceError || regNoError) {
       setCity({ ...city, error: cityError });
       setCarMakes({ ...carMakes, error: carMakeError });
@@ -255,6 +298,9 @@ const CarInformation = ({
       setPrice({ ...price, error: priceError });
       setRegistrationNo({ ...registrationNo, error: regNoError });
       setDescription({ ...description, error: desError });
+      setAdType({ ...AdType, error: adTypeError });
+      setrentType({ ...rentType, error: rentTypeError });
+      setRentalCharge({ ...rentalCharge, error: rentalChargeError });
       return;
     }
 
@@ -473,7 +519,7 @@ const CarInformation = ({
       />
       <TextInput
         label="Registration No."
-        placeholder="e.g. AAA-001"
+        placeholder="e.g. AAA001"
         returnKeyType="next"
         autoCapitalize="none"
         style={styles.input}
@@ -488,21 +534,78 @@ const CarInformation = ({
       <Text style={styles.warningText}>
         *Registration Number will not be displayed on the platform
       </Text>
-      <TextInput
-        label="Price"
-        placeholder="e.g. 2,0000"
-        returnKeyType="next"
-        autoCapitalize="none"
-        style={styles.input}
-        value={price.value}
-        onChangeText={(text: any) => {
-          setPrice({ value: text, error: "" });
-          setFormData({ name: "price", value: text });
-        }}
-        error={!!price.error}
-        errorText={price.error}
-        keyboardType="number-pad"
-      />
+      <View style={{ marginTop: 10 }}>
+        <Text>Ad Type</Text>
+        <RNPickerSelect
+          items={carAdTypeList}
+          onValueChange={(text: any) => {
+            setAdType({ value: text, error: "" });
+            if (text === "Rental") {
+              setPriceShow(false);
+            } else {
+              setPriceShow(true);
+            }
+
+            //setFormData({ name: "modelVersion", value: text });
+          }}
+          useNativeAndroidPickerStyle={false}
+          style={!!AdType.error ? pickerErrorStyles : pickerSelectStyles}
+          value={AdType.value}
+        />
+        {!!AdType.error && <Text style={{ color: "red" }}>{AdTsype.error}</Text>}
+      </View>
+      {priceShow ? (
+        <TextInput
+          label="Price"
+          placeholder="e.g. 2,0000"
+          returnKeyType="next"
+          autoCapitalize="none"
+          style={styles.input}
+          value={price.value}
+          onChangeText={(text: any) => {
+            setPrice({ value: text, error: "" });
+            setFormData({ name: "price", value: text });
+          }}
+          error={!!price.error}
+          errorText={price.error}
+          keyboardType="number-pad"
+        />
+      ) : (
+        <>
+          <TextInput
+            label="Rate (Rs)"
+            placeholder="e.g. 1,000"
+            returnKeyType="next"
+            autoCapitalize="none"
+            style={styles.input}
+            value={rentalCharge.value}
+            onChangeText={(text: any) => {
+              setRentalCharge({ value: text, error: "" });
+              //  setFormData({ name: "price", value: text });
+            }}
+            error={!!rentalCharge.error}
+            errorText={rentalCharge.error}
+            keyboardType="number-pad"
+          />
+
+          <View style={{ marginTop: 10 }}>
+            <Text>Rental Basis</Text>
+            <RNPickerSelect
+              items={carRentType}
+              onValueChange={(text: any) => {
+                setrentType({ value: text, error: "" });
+                //setFormData({ name: "modelVersion", value: text });
+              }}
+              useNativeAndroidPickerStyle={false}
+              style={!!rentType.error ? pickerErrorStyles : pickerSelectStyles}
+              value={rentType.value}
+            />
+            {!!rentType.error && (
+              <Text style={{ color: "red" }}>{rentType.error}</Text>
+            )}
+          </View>
+        </>
+      )}
 
       <TextInput
         multiline

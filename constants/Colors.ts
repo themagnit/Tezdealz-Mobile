@@ -52,6 +52,7 @@ export const COLOR = {
   pureBlue:'#0000FF',
   tabActive:'#05409D',
   tabInctive:'#979797',
-  headerColor:'#484848'
+  headerColor:'#484848',
+  green:'#2DA771'
   
 };

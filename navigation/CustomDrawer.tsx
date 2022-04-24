@@ -72,6 +72,17 @@ export function CustomDrawerContent(props: any) {
               props.navigation.navigate("Your Add");
             }}
           />
+           <View style={styles.separator} />
+          <DrawerItem
+            icon={({ color, size }) => (
+              <Ionicons name="car" size={24} color={COLOR.darkBlue} />
+            )}
+            labelStyle={styles.labelStyle}
+            label="My Appointment"
+            onPress={() => {
+              props.navigation.navigate("AddAppointment");
+            }}
+          />
           <View style={styles.separator} />
           <DrawerItem
             icon={({ color, size }) => (

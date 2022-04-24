@@ -17,7 +17,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 import styles from "./styles";
 import CarInformation from "./CarInformation/CarInformation";
-import { ProgressSteps, ProgressStep } from "react-native-progress-steps";
+
 import UploadPhoto from "./UploadPhoto/UploadPhoto";
 import AddionalInformation from "./AdditionalInformation/AdditionalInformation";
 import { addData, deleteData, getAllData, updateData } from "../../Utility/API";

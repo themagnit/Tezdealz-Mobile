@@ -12,7 +12,7 @@ import {
 } from "@expo/vector-icons";
 import Home from "../screens/Home";
 import Compare from "../screens/Compare/Compare";
-import CompareNew from '../screens/CompareNew/CompareNew'
+import CompareNew from "../screens/CompareNew/CompareNew";
 import BrowseCar from "../screens/Browse Car/BrowseCar";
 import Help from "../screens/Help/Help";
 import AddPost from "../screens/AddPost/AddPost";
@@ -26,7 +26,10 @@ import Location from "../screens/Location/Location";
 import { COLOR } from "../constants/Colors";
 import ChangePassword from "../screens/Settings/ChangePassword";
 import CompareCar from "../screens/CompareCar/CompareCar";
-
+import AutoStore from "../screens/AutoSpare/AutoSpare";
+import Appointment from "../screens/Appointment/Appointment";
+import AddAppointment from "../screens/AddAppointment/AddAppointment";
+import ViewReport from "../screens/Car Details/ViewReport/ViewReport";
 const Stack = createStackNavigator();
 
 const screenOptionStyle = {
@@ -50,6 +53,59 @@ const HomeStackNavigator = ({ navigation }: any) => {
         }}
       />
       <Stack.Screen name="Car Details" component={CarDetails} />
+      <Stack.Screen name="Appointment" component={Appointment} />
+      <Stack.Screen
+        name="ViewReport"
+        component={ViewReport}
+        options={{
+          title: "Inspection Report",
+          headerTitleAlign: "left",
+          // headerRight: () => (
+          //   <View style={{ flexDirection: "row" }}>
+          //     <FontAwesome
+          //       name="user-circle-o"
+          //       size={24}
+          //       color={COLOR.headerColor}
+          //       style={{ marginHorizontal: 15 }}
+          //       onPress={() => {
+          //         navigation.navigate("Profile");
+          //       }}
+          //     />
+          //     <Text>Download report</Text>
+          //   </View>
+          // ),
+        }}
+      />
+      <Stack.Screen
+        name="AddAppointment"
+        component={AddAppointment}
+        options={{
+          title: "My Appointment",
+          headerLeft: () => (
+            <Icon
+              name="menu"
+              style={{ margin: 10 }}
+              size={30}
+              color={COLOR.headerColor}
+              onPress={() => {
+                navigation.openDrawer();
+              }}
+            />
+          ),
+          headerRight: () => (
+            <FontAwesome
+              name="user-circle-o"
+              size={24}
+              color={COLOR.headerColor}
+              style={{ marginHorizontal: 15 }}
+              onPress={() => {
+                navigation.navigate("Profile");
+              }}
+            />
+          ),
+        }}
+      />
+
       <Stack.Screen
         name="Location"
         component={Location}
@@ -202,6 +258,23 @@ const BrowseStackNavigator = ({ navigation }: any) => {
           ),
         }}
       />
+      {/* <Stack.Screen
+        name="Help"
+        component={Help}
+        options={{
+          headerLeft: () => (
+            <Icon
+              name="menu"
+              style={{ margin: 10 }}
+              size={30}
+              color={COLOR.headerColor}
+              onPress={() => {
+                navigation.openDrawer(); 
+              }}
+            />
+          ),
+        }}
+      /> */}
     </Stack.Navigator>
   );
 };
@@ -264,6 +337,30 @@ const HelpStackNavigator = ({ navigation }: any) => {
     </Stack.Navigator>
   );
 };
+const AutoStoreStackNavigator = ({ navigation }: any) => {
+  return (
+    <Stack.Navigator screenOptions={screenOptionStyle}>
+      <Stack.Screen
+        name="AutoStore"
+        component={AutoStore}
+        options={{
+          headerShown: false,
+          headerLeft: () => (
+            <Icon
+              name="menu"
+              style={{ margin: 10 }}
+              size={30}
+              color={COLOR.headerColor}
+              onPress={() => {
+                navigation.openDrawer();
+              }}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export {
   HomeStackNavigator,
@@ -271,4 +368,5 @@ export {
   BrowseStackNavigator,
   PostStackNavigator,
   HelpStackNavigator,
+  AutoStoreStackNavigator,
 };

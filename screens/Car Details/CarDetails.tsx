@@ -49,6 +49,7 @@ import Specification from "./Specification/Specification";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useSelector } from "react-redux";
 import useShortListCars from "../../redux/hooks/useShortListCars";
+import CarInspection from "./CarInspection/CarInspection";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -323,7 +324,7 @@ const CarDetails = ({ navigation, route }: any) => {
             imageLoadingColor="#2196F3"
           ></SliderBox>
           <View style={{ marginEnd: 20 }}>
-            <WaterMark />
+            {/* <WaterMark /> */}
           </View>
         </View>
 
@@ -472,6 +473,9 @@ const CarDetails = ({ navigation, route }: any) => {
             </Tab.Screen>
             <Tab.Screen name="Features">
               {(props) => <Features {...props} carFeatures={carFeatures} />}
+            </Tab.Screen>
+            <Tab.Screen name="Car Inspection">
+              {(props) => <CarInspection {...props} data={obj} />}
             </Tab.Screen>
           </Tab.Navigator>
         </View>
