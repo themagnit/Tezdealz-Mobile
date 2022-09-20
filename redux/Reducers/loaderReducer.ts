@@ -14,14 +14,14 @@ export default function loaderReducer(
     case ReducerConstants.SHOW_LOADER:
       return {
         ...state,
-        isLoading: true,
+        isLoader: true,
         loadertext: action.data.text,
         showFullPageLoader: action.data.showFullPageLoader,
       };
     case ReducerConstants.HIDE_LOADER:
       return {
         ...state,
-        isLoading: false,
+        isLoader: false,
         loadertext: "",
       };
 

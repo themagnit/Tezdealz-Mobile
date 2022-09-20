@@ -1,7 +1,7 @@
 import axios from "axios";
-export const getHeaders = () => {
-  const token = localStorage.getItem("idtoken");
-
+import * as SecureStore from 'expo-secure-store';
+export const getHeaders = async() => {
+  let token = await SecureStore.getItemAsync('token');
   const res = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -37,6 +37,9 @@ export const ApiService = (
     params: params,
   });
 };
+
+
+
 
 const exports = {
   ApiService,

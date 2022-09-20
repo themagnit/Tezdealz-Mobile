@@ -8,5 +8,7 @@ export const ReducerConstants = {
   HIDE_NOTIFICATION: "HIDE_NOTIFICATION",
   LOGIN: "LOGIN",
   LOGOUT: "LOGOUT",
+  START_LOGIN:'START_LOGIN',
+  
 };
 export default {};
